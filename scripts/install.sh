@@ -84,8 +84,16 @@ fi
 latestVersion=$(curl -sI 'https://gitea.elara.ws/lure/lure/releases/latest' | grep -io 'location: .*' | rev | cut -d '/' -f1 | rev | tr -d '[:space:]')
 info "Found latest LURE version:" $latestVersion
 
+# FIX: Normalize architecture for ARM and 32-bit x86
+arch=$(uname -m)
+case $arch in
+  armv*) arch="arm" ;;
+  i686)  arch="i386" ;;
+esac
+
 fname="$(mktemp -u -p /tmp "lure.XXXXXXXXXX").${pkgFormat}"
-url="https://gitea.elara.ws/lure/lure/releases/download/${latestVersion}/linux-user-repository-${latestVersion#v}-linux-$(uname -m).${pkgFormat}"
+# Use ${arch} instead of $(uname -m)
+url="https://gitea.elara.ws/lure/lure/releases/download/${latestVersion}/linux-user-repository-${latestVersion#v}-linux-${arch}.${pkgFormat}"
 
 info "Downloading LURE package" 
 curl -L $url -o $fname
