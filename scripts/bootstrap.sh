@@ -47,6 +47,36 @@ installPkg() {
     esac
 }
 
+pkgFormat=""
+pkgMgr=""
+if command -v pacman &>/dev/null; then
+    info "Detected pacman"
+    pkgFormat="pkg.tar.zst"
+    pkgMgr="pacman"
+elif command -v apt &>/dev/null; then
+    info "Detected apt"
+    pkgFormat="deb"
+    pkgMgr="apt"
+elif command -v dnf &>/dev/null; then
+    info "Detected dnf"
+    pkgFormat="rpm"
+    pkgMgr="dnf"
+elif command -v yum &>/dev/null; then
+    info "Detected yum"
+    pkgFormat="rpm"
+    pkgMgr="yum"
+elif command -v zypper &>/dev/null; then
+    info "Detected zypper"
+    pkgFormat="rpm"
+    pkgMgr="zypper"
+elif command -v apk &>/dev/null; then
+    info "Detected apk"
+    pkgFormat="apk"
+    pkgMgr="apk"
+else
+    error "No supported package manager detected!"
+fi
+
 if ! command -v curl &>/dev/null; then
     error "This script requires the curl command. Please install it and run again."
 fi
@@ -65,15 +95,18 @@ cd $tmpdir
 # Use ${arch} instead of $(uname -m)
 filename="lure-${latestVersion}-linux-${arch}"
 url="https://github.com/Sintan1729/lure/releases/download/${latestVersion}/${filename}.tar.gz"
-echo $url
 
 info "Downloading LURE package"
 curl -L $url -o lure.tar.gz
 tar -xzf lure.tar.gz -C .
 
+url="https://raw.githubusercontent.com/SinTan1729/lure-repo/refs/heads/main/linux-user-repository-bin/lure.sh"
+curl -L $url -o lure.sh
+
 info "Installing LURE package"
 mv $filename lure
-./lure install linux-user-repository-bin
+./lure build
+installPkg $pkgMgr linux-user-repository-bin*.$pkgFormat
 
 info "Cleaning up"
 rm -rf $tmpdir

@@ -20,7 +20,7 @@ LURE is written in pure Go and has zero dependencies after building. The only th
 The LURE install script will automatically download and install the appropriate LURE package on your system. To use it, simply run the following command:
 
 ```bash
-curl -fsSL lure.sh/install | bash
+curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/master/scripts/bootstrap.sh | bash
 ```
 
 **IMPORTANT**: This will download and run the script from https://lure.sh/install. Please look through any script you download from the internet (including this one) before running it.
@@ -75,3 +75,4 @@ Thanks to the following projects for making LURE possible:
 - https://github.com/goreleaser/nfpm
 - https://github.com/charmbracelet/bubbletea
 - https://gitlab.com/cznic/sqlite
+
