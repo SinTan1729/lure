@@ -13,6 +13,24 @@ LURE is written in pure Go and has zero dependencies after building. The only th
 
 ---
 
+## Notice for the fork
+
+There hasn't been any new development in the source repo for a few years. Even though the project remains usable (by its very nature, it
+doesn't need constant updates), over time the installation binaries have vanished, and potential issues are being ignored.
+For now, I just rebuilt and binaries, and updated installation instructions so that they actually work. I might work on fixing issues if I
+have the time, but I have no such plans for now.
+
+If you already have `lure` installed, and would like to switch to this fork, it's recommended that you clear up old artifacts. Just run the
+following commands.
+
+```bash
+rm -f ~/.config/lure/lure.toml
+rm -rf ~/.cache/lure
+
+```
+
+---
+
 ## Installation
 
 ### Install script
@@ -23,11 +41,11 @@ The LURE install script will automatically download and install the appropriate 
 curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/master/scripts/bootstrap.sh | bash
 ```
 
-**IMPORTANT**: This will download and run the script from https://lure.sh/install. Please look through any script you download from the internet (including this one) before running it.
+**IMPORTANT**: This will download and run the script from GitHub. Please look through any script you download from the internet (including this one) before running it.
 
 ### Packages
 
-Distro packages and binary archives are provided at the latest Gitea release: https://gitea.elara.ws/lure/lure/releases/latest
+Distro packages and binary archives are provided at the latest Gitea release: https://github.com/Sintan1729/lure/releases/latest
 
 LURE is also available on the AUR as [linux-user-repository-bin](https://aur.archlinux.org/packages/linux-user-repository-bin)
 
@@ -75,4 +93,3 @@ Thanks to the following projects for making LURE possible:
 - https://github.com/goreleaser/nfpm
 - https://github.com/charmbracelet/bubbletea
 - https://gitlab.com/cznic/sqlite
-
