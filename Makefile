@@ -4,8 +4,26 @@ GIT_VERSION = $(shell git describe --tags )
 lure:
 	CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'"
 
+build:
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-x86_64"
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-aarch64"
+	GOOS=linux GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-arm"
+	GOOS=linux GOARCH=386 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-i386"
+	GOOS=linux GOARCH=riscv64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-riscv64"
+
+release: build
+	for f in build/lure-*; do \
+		if [ "$${f##*.}" = "gz" ]; then \
+			continue; \
+		fi; \
+		tar -czf "$$f.tar.gz" \
+			-C build "$$(basename "$$f")" \
+			-C .. scripts/completion; \
+	done
+
 clean:
 	rm -f lure
+	rm -rf build/*
 
 install: lure installmisc
 	install -Dm755 lure $(DESTDIR)$(PREFIX)/bin/lure
@@ -17,4 +35,4 @@ installmisc:
 uninstall:
 	rm -f /usr/local/bin/lure
 
-.PHONY: install clean uninstall installmisc lure
+.PHONY: install clean uninstall installmisc lure build release
