@@ -1,15 +1,15 @@
 PREFIX ?= /usr/local
-GIT_VERSION = $(shell git describe --tags )
+GIT_VERSION = $(shell git describe --abbrev=0)
 
 lure:
-	CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'"
+	CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'"
 
 build:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-x86_64"
-	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-aarch64"
-	GOOS=linux GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-arm"
-	GOOS=linux GOARCH=386 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-i386"
-	GOOS=linux GOARCH=riscv64 CGO_ENABLED=0 go build -ldflags="-X 'go.elara.ws/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-riscv64"
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-x86_64"
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-aarch64"
+	GOOS=linux GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-arm"
+	GOOS=linux GOARCH=386 CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-i386"
+	GOOS=linux GOARCH=riscv64 CGO_ENABLED=0 go build -ldflags="-X 'lure.sh/lure/internal/config.Version=$(GIT_VERSION)'" -o "build/lure-$(GIT_VERSION)-linux-riscv64"
 
 release: build
 	for f in build/lure-*; do \
