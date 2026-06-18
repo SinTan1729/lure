@@ -106,7 +106,7 @@ curl -L $url -o lure.sh
 info "Installing LURE package"
 mv $filename lure
 ./lure build
-installPkg $pkgMgr linux-user-repository-bin*.$pkgFormat
+installPkg $pkgMgr $tmpdir/linux-user-repository-bin*.$pkgFormat
 
 info "Cleaning up"
 rm -rf $tmpdir
