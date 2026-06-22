@@ -30,7 +30,9 @@ import (
 )
 
 func TestFindPkgs(t *testing.T) {
-	_, err := db.Open(":memory:")
+	ctx := context.Background()
+
+	_, err := db.Open(ctx, ":memory:")
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -38,8 +40,6 @@ func TestFindPkgs(t *testing.T) {
 
 	setCfgDirs(t)
 	defer removeCacheDir(t)
-
-	ctx := context.Background()
 
 	err = repos.Pull(ctx, []types.Repo{
 		{
@@ -51,7 +51,7 @@ func TestFindPkgs(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	found, notFound, err := repos.FindPkgs([]string{"itd", "nonexistentpackage1", "nonexistentpackage2"})
+	found, notFound, err := repos.FindPkgs(ctx, []string{"itd", "nonexistentpackage1", "nonexistentpackage2"})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -81,7 +81,9 @@ func TestFindPkgs(t *testing.T) {
 }
 
 func TestFindPkgsEmpty(t *testing.T) {
-	_, err := db.Open(":memory:")
+	ctx := context.Background()
+
+	_, err := db.Open(ctx, ":memory:")
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -90,7 +92,7 @@ func TestFindPkgsEmpty(t *testing.T) {
 	setCfgDirs(t)
 	defer removeCacheDir(t)
 
-	err = db.InsertPackage(db.Package{
+	err = db.InsertPackage(ctx, db.Package{
 		Name:       "test1",
 		Repository: "default",
 		Version:    "0.0.1",
@@ -105,7 +107,7 @@ func TestFindPkgsEmpty(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	err = db.InsertPackage(db.Package{
+	err = db.InsertPackage(ctx, db.Package{
 		Name:       "test2",
 		Repository: "default",
 		Version:    "0.0.1",
@@ -120,7 +122,7 @@ func TestFindPkgsEmpty(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	found, notFound, err := repos.FindPkgs([]string{"test", ""})
+	found, notFound, err := repos.FindPkgs(ctx, []string{"test", ""})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}

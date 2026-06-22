@@ -243,8 +243,10 @@ func processRepoChanges(ctx context.Context, repo types.Repo, r *git.Repository,
 		env := append(os.Environ(), "scriptdir="+filepath.Dir(filepath.Join(repoDir, action.File)))
 		runner, err := interp.New(
 			interp.Env(expand.ListEnviron(env...)),
-			interp.ExecHandler(handlers.NopExec),
-			interp.ReadDirHandler(handlers.RestrictedReadDir(repoDir)),
+			interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+				return handlers.NopExec
+			}),
+			interp.ReadDirHandler2(handlers.RestrictedReadDir(repoDir)),
 			interp.StatHandler(handlers.RestrictedStat(repoDir)),
 			interp.OpenHandler(handlers.RestrictedOpen(repoDir)),
 			interp.StdIO(handlers.NopRWC{}, handlers.NopRWC{}, handlers.NopRWC{}),
@@ -349,8 +351,10 @@ func processRepoFull(ctx context.Context, repo types.Repo, repoDir string) error
 		env := append(os.Environ(), "scriptdir="+filepath.Dir(match))
 		runner, err := interp.New(
 			interp.Env(expand.ListEnviron(env...)),
-			interp.ExecHandler(handlers.NopExec),
-			interp.ReadDirHandler(handlers.RestrictedReadDir(repoDir)),
+			interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+				return handlers.NopExec
+			}),
+			interp.ReadDirHandler2(handlers.RestrictedReadDir(repoDir)),
 			interp.StatHandler(handlers.RestrictedStat(repoDir)),
 			interp.OpenHandler(handlers.RestrictedOpen(repoDir)),
 			interp.StdIO(handlers.NopRWC{}, handlers.NopRWC{}, handlers.NopRWC{}),

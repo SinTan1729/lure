@@ -23,8 +23,8 @@ import (
 	"strings"
 	"testing"
 
-	"lure.sh/lure/internal/shutils/handlers"
 	"lure.sh/lure/internal/shutils/decoder"
+	"lure.sh/lure/internal/shutils/handlers"
 	"lure.sh/lure/pkg/distro"
 	"mvdan.cc/sh/v3/interp"
 	"mvdan.cc/sh/v3/syntax"
@@ -89,7 +89,7 @@ func TestExecFuncs(t *testing.T) {
 		t.Fatalf("Expected test() function to exist")
 	}
 
-	eh := shutils.ExecFuncs{
+	eh := handlers.ExecFuncs{
 		"test-cmd": func(hc interp.HandlerContext, name string, args []string) error {
 			if name != "test-cmd" {
 				t.Errorf("Expected name to be 'test-cmd', got '%s'", name)
@@ -113,7 +113,9 @@ func TestExecFuncs(t *testing.T) {
 		return nil
 	}
 
-	err = fn(ctx, interp.ExecHandler(eh.ExecHandler(fbHandler)))
+	err = fn(ctx, interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+		return eh.ExecHandler(fbHandler)
+	}))
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}

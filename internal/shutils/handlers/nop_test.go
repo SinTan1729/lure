@@ -40,7 +40,9 @@ func TestNopExec(t *testing.T) {
 
 	buf := &bytes.Buffer{}
 	runner, err := interp.New(
-		interp.ExecHandler(handlers.NopExec),
+		interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+			return handlers.NopExec
+		}),
 		interp.StdIO(os.Stdin, buf, buf),
 	)
 	if err != nil {

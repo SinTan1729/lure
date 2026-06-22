@@ -67,7 +67,7 @@ func BuildPackage(ctx context.Context, opts types.BuildOpts) ([]string, []string
 		return nil, nil, err
 	}
 
-	fl, err := parseScript(info, opts.Script)
+	fl, err := parseScript(opts.Script)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -85,7 +85,7 @@ func BuildPackage(ctx context.Context, opts types.BuildOpts) ([]string, []string
 	// If opts.Clean isn't set and we find the package already built,
 	// just return it rather than rebuilding
 	if !opts.Clean {
-		builtPkgPath, ok, err := checkForBuiltPackage(opts.Manager, vars, getPkgFormat(opts.Manager), dirs.BaseDir)
+		builtPkgPath, ok, err := checkForBuiltPackage(vars, getPkgFormat(opts.Manager), dirs.BaseDir)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -206,7 +206,7 @@ func BuildPackage(ctx context.Context, opts types.BuildOpts) ([]string, []string
 }
 
 // parseScript parses the build script using the built-in bash implementation
-func parseScript(info *distro.OSRelease, script string) (*syntax.File, error) {
+func parseScript(script string) (*syntax.File, error) {
 	fl, err := os.Open(script)
 	if err != nil {
 		return nil, err
@@ -230,8 +230,10 @@ func executeFirstPass(ctx context.Context, info *distro.OSRelease, fl *syntax.Fi
 	runner, err := interp.New(
 		interp.Env(expand.ListEnviron(env...)),
 		interp.StdIO(os.Stdin, os.Stdout, os.Stderr),
-		interp.ExecHandler(helpers.Restricted.ExecHandler(handlers.NopExec)),
-		interp.ReadDirHandler(handlers.RestrictedReadDir(scriptDir)),
+		interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+			return helpers.Restricted.ExecHandler(handlers.NopExec)
+		}),
+		interp.ReadDirHandler2(handlers.RestrictedReadDir(scriptDir)),
 		interp.StatHandler(handlers.RestrictedStat(scriptDir)),
 		interp.OpenHandler(handlers.RestrictedOpen(scriptDir)),
 	)
@@ -275,7 +277,9 @@ func executeSecondPass(ctx context.Context, info *distro.OSRelease, fl *syntax.F
 	runner, err := interp.New(
 		interp.Env(expand.ListEnviron(env...)),
 		interp.StdIO(os.Stdin, os.Stdout, os.Stderr),
-		interp.ExecHandler(helpers.Helpers.ExecHandler(fakeroot)),
+		interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+			return helpers.Helpers.ExecHandler(fakeroot)
+		}),
 	)
 	if err != nil {
 		return nil, err
@@ -627,7 +631,7 @@ func removeBuildDeps(ctx context.Context, buildDeps []string, opts types.BuildOp
 
 // checkForBuiltPackage tries to detect a previously-built package and returns its path
 // and true if it finds one. If it doesn't find it, it returns "", false, nil.
-func checkForBuiltPackage(mgr manager.Manager, vars *types.BuildVars, pkgFormat, baseDir string) (string, bool, error) {
+func checkForBuiltPackage(vars *types.BuildVars, pkgFormat, baseDir string) (string, bool, error) {
 	filename, err := pkgFileName(vars, pkgFormat)
 	if err != nil {
 		return "", false, err

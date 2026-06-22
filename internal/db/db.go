@@ -28,9 +28,9 @@ import (
 	"sync"
 
 	"github.com/jmoiron/sqlx"
+	"golang.org/x/exp/slices"
 	"lure.sh/lure/internal/config"
 	"lure.sh/lure/pkg/loggerctx"
-	"golang.org/x/exp/slices"
 	"modernc.org/sqlite"
 )
 
@@ -80,7 +80,7 @@ func DB(ctx context.Context) *sqlx.DB {
 	if conn != nil && !closed {
 		return getConn()
 	}
-	_, err := open(ctx, config.GetPaths(ctx).DBPath)
+	_, err := Open(ctx, config.GetPaths(ctx).DBPath)
 	if err != nil {
 		log.Fatal("Error opening database").Err(err).Send()
 	}
@@ -93,7 +93,7 @@ func getConn() *sqlx.DB {
 	return conn
 }
 
-func open(ctx context.Context, dsn string) (*sqlx.DB, error) {
+func Open(ctx context.Context, dsn string) (*sqlx.DB, error) {
 	db, err := sqlx.Open("sqlite", dsn)
 	if err != nil {
 		return nil, err

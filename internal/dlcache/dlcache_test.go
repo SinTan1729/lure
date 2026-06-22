@@ -41,12 +41,14 @@ func init() {
 
 func TestNew(t *testing.T) {
 	const id = "https://example.com"
-	dir, err := dlcache.New(id)
+	ctx := context.Background()
+
+	dir, err := dlcache.New(ctx, id)
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}
 
-	exp := filepath.Join(dlcache.BasePath(), sha1sum(id))
+	exp := filepath.Join(dlcache.BasePath(ctx), sha1sum(id))
 	if dir != exp {
 		t.Errorf("Expected %s, got %s", exp, dir)
 	}
@@ -60,7 +62,7 @@ func TestNew(t *testing.T) {
 		t.Errorf("Expected cache item to be a directory")
 	}
 
-	dir2, ok := dlcache.Get(id)
+	dir2, ok := dlcache.Get(ctx, id)
 	if !ok {
 		t.Errorf("Expected Get() to return valid value")
 	}

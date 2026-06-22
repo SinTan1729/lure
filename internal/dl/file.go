@@ -31,7 +31,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mholt/archiver/v4"
+	"github.com/mholt/archives"
 	"github.com/schollz/progressbar/v3"
 	"lure.sh/lure/internal/shutils/handlers"
 )
@@ -162,8 +162,8 @@ func (FileDownloader) Download(opts Options) (Type, string, error) {
 		return 0, "", err
 	}
 
-	format, ar, err := archiver.Identify(name, fl)
-	if err == archiver.ErrNoMatch {
+	format, ar, err := archives.Identify(context.Background(), name, fl)
+	if err == archives.NoMatch {
 		return TypeFile, name, nil
 	} else if err != nil {
 		return 0, "", err
@@ -179,12 +179,12 @@ func (FileDownloader) Download(opts Options) (Type, string, error) {
 }
 
 // extractFile extracts an archive or decompresses a file
-func extractFile(r io.Reader, format archiver.Format, name string, opts Options) (err error) {
-	fname := format.Name()
+func extractFile(r io.Reader, format archives.Format, name string, opts Options) (err error) {
+	fname := format.Extension()
 
 	switch format := format.(type) {
-	case archiver.Extractor:
-		err = format.Extract(context.Background(), r, nil, func(ctx context.Context, f archiver.File) error {
+	case archives.Extractor:
+		err = format.Extract(context.Background(), r, func(ctx context.Context, f archives.FileInfo) error {
 			fr, err := f.Open()
 			if err != nil {
 				return err
@@ -223,7 +223,7 @@ func extractFile(r io.Reader, format archiver.Format, name string, opts Options)
 		if err != nil {
 			return err
 		}
-	case archiver.Decompressor:
+	case archives.Decompressor:
 		rc, err := format.OpenReader(r)
 		if err != nil {
 			return err

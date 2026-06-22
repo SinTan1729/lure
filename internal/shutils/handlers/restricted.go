@@ -26,16 +26,15 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/exp/slices"
 	"mvdan.cc/sh/v3/interp"
 )
 
-func RestrictedReadDir(allowedPrefixes ...string) interp.ReadDirHandlerFunc {
-	return func(ctx context.Context, s string) ([]fs.FileInfo, error) {
+func RestrictedReadDir(allowedPrefixes ...string) interp.ReadDirHandlerFunc2 {
+	return func(ctx context.Context, s string) ([]fs.DirEntry, error) {
 		path := filepath.Clean(s)
 		for _, allowedPrefix := range allowedPrefixes {
 			if strings.HasPrefix(path, allowedPrefix) {
-				return interp.DefaultReadDirHandler()(ctx, s)
+				return interp.DefaultReadDirHandler2()(ctx, s)
 			}
 		}
 
@@ -71,8 +70,10 @@ func RestrictedOpen(allowedPrefixes ...string) interp.OpenHandlerFunc {
 
 func RestrictedExec(allowedCmds ...string) interp.ExecHandlerFunc {
 	return func(ctx context.Context, args []string) error {
-		if slices.Contains(allowedCmds, args[0]) {
-			return interp.DefaultExecHandler(2*time.Second)(ctx, args)
+		for _, cmd := range allowedCmds {
+			if cmd == args[0] {
+				return interp.DefaultExecHandler(2*time.Second)(ctx, args)
+			}
 		}
 
 		return nil
