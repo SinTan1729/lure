@@ -487,15 +487,16 @@ func executeFunctions(ctx context.Context, dec *decoder.Decoder, dirs types.Dire
 // buildPkgMetadata builds the metadata for the package that's going to be built.
 func buildPkgMetadata(vars *types.BuildVars, dirs types.Directories, pkgFormat string, deps []string) (*nfpm.Info, error) {
 	pkgInfo := &nfpm.Info{
-		Name:        vars.Name,
-		Description: vars.Description,
-		Arch:        cpu.Arch(),
-		Platform:    "linux",
-		Version:     vars.Version,
-		Release:     strconv.Itoa(vars.Release),
-		Homepage:    vars.Homepage,
-		License:     strings.Join(vars.Licenses, ", "),
-		Maintainer:  vars.Maintainer,
+		Name:            vars.Name,
+		Description:     vars.Description,
+		Arch:            cpu.Arch(),
+		Platform:        "linux",
+		Version:         vars.Version,
+		Release:         strconv.Itoa(vars.Release),
+		Homepage:        vars.Homepage,
+		License:         strings.Join(vars.Licenses, ", "),
+		Maintainer:      vars.Maintainer,
+		DisableGlobbing: true,
 		Overridables: nfpm.Overridables{
 			Conflicts: vars.Conflicts,
 			Replaces:  vars.Replaces,
