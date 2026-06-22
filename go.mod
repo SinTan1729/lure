@@ -122,3 +122,11 @@ require (
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )
+
+replace lure.sh/fakeroot => github.com/sintan1729/fakeroot v0.0.0-20231024205152-b2da39c1be0c
+
+replace lure.sh/translate => github.com/sintan1729/translate v0.0.0-20260622042251-5dc8dce4cbe8
+
+replace go.elara.ws/vercmp => github.com/sintan1729/vercmp v0.0.0-20250912200949-2e97859b8794
+
+replace go.elara.ws/logger => github.com/sintan1729/logger v0.0.0-20240720233222-35a314443645
