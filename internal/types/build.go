@@ -18,7 +18,7 @@
 
 package types
 
-import "lure.sh/lure/pkg/manager"
+import "github.com/sintan1729/lure/pkg/manager"
 
 type BuildOpts struct {
 	Script      string

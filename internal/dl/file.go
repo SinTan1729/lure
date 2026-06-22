@@ -33,7 +33,7 @@ import (
 
 	"github.com/mholt/archives"
 	"github.com/schollz/progressbar/v3"
-	"lure.sh/lure/internal/shutils/handlers"
+	"github.com/sintan1729/lure/internal/shutils/handlers"
 )
 
 // FileDownloader downloads files using HTTP

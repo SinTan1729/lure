@@ -22,11 +22,11 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/internal/db"
-	"lure.sh/lure/pkg/loggerctx"
-	"lure.sh/lure/pkg/manager"
-	"lure.sh/lure/pkg/repos"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/internal/db"
+	"github.com/sintan1729/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/pkg/manager"
+	"github.com/sintan1729/lure/pkg/repos"
 	"golang.org/x/exp/slices"
 )
 

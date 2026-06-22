@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	"github.com/urfave/cli/v2"
-	"lure.sh/lure/internal/cpu"
-	"lure.sh/lure/internal/shutils/helpers"
-	"lure.sh/lure/pkg/distro"
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/internal/cpu"
+	"github.com/sintan1729/lure/internal/shutils/helpers"
+	"github.com/sintan1729/lure/pkg/distro"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 	"mvdan.cc/sh/v3/expand"
 	"mvdan.cc/sh/v3/interp"
 )

@@ -24,10 +24,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/internal/db"
-	"lure.sh/lure/internal/types"
-	"lure.sh/lure/pkg/repos"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/internal/db"
+	"github.com/sintan1729/lure/internal/types"
+	"github.com/sintan1729/lure/pkg/repos"
 )
 
 func setCfgDirs(t *testing.T) {

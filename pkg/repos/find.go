@@ -21,7 +21,7 @@ package repos
 import (
 	"context"
 
-	"lure.sh/lure/internal/db"
+	"github.com/sintan1729/lure/internal/db"
 )
 
 // FindPkgs looks for packages matching the inputs inside the database.

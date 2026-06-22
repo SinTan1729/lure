@@ -27,8 +27,8 @@ import (
 	"strings"
 	"testing"
 
-	"lure.sh/lure/internal/shutils/decoder"
-	"lure.sh/lure/pkg/distro"
+	"github.com/sintan1729/lure/internal/shutils/decoder"
+	"github.com/sintan1729/lure/pkg/distro"
 	"mvdan.cc/sh/v3/interp"
 	"mvdan.cc/sh/v3/syntax"
 )

@@ -25,7 +25,7 @@ import (
 	"testing"
 
 	"github.com/jmoiron/sqlx"
-	"lure.sh/lure/internal/db"
+	"github.com/sintan1729/lure/internal/db"
 )
 
 var testPkg = db.Package{

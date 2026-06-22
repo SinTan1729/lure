@@ -24,7 +24,7 @@ import (
 	"sync"
 
 	"go.elara.ws/logger"
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 	"go.elara.ws/translate"
 	"golang.org/x/text/language"
 )

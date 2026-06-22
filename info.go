@@ -23,12 +23,12 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"lure.sh/lure/internal/cliutils"
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/internal/overrides"
-	"lure.sh/lure/pkg/distro"
-	"lure.sh/lure/pkg/loggerctx"
-	"lure.sh/lure/pkg/repos"
+	"github.com/sintan1729/lure/internal/cliutils"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/internal/overrides"
+	"github.com/sintan1729/lure/pkg/distro"
+	"github.com/sintan1729/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/pkg/repos"
 	"gopkg.in/yaml.v3"
 )
 

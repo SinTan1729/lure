@@ -25,8 +25,8 @@ import (
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
-	"lure.sh/lure/internal/overrides"
-	"lure.sh/lure/pkg/distro"
+	"github.com/sintan1729/lure/internal/overrides"
+	"github.com/sintan1729/lure/pkg/distro"
 	"golang.org/x/exp/slices"
 	"mvdan.cc/sh/v3/expand"
 	"mvdan.cc/sh/v3/interp"

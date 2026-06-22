@@ -26,7 +26,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"lure.sh/lure/internal/config"
+	"github.com/sintan1729/lure/internal/config"
 )
 
 // BasePath returns the base path of the download cache

@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"lure.sh/lure/pkg/gen"
+	"github.com/sintan1729/lure/pkg/gen"
 )
 
 var genCmd = &cli.Command{

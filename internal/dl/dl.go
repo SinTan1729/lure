@@ -39,8 +39,8 @@ import (
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/blake2s"
 	"golang.org/x/exp/slices"
-	"lure.sh/lure/internal/dlcache"
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/internal/dlcache"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 )
 
 const manifestFileName = ".lure_cache_manifest"

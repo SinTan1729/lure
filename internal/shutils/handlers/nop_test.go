@@ -25,7 +25,7 @@ import (
 	"strings"
 	"testing"
 
-	"lure.sh/lure/internal/shutils/handlers"
+	"github.com/sintan1729/lure/internal/shutils/handlers"
 	"mvdan.cc/sh/v3/interp"
 	"mvdan.cc/sh/v3/syntax"
 )

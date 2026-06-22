@@ -24,11 +24,11 @@ import (
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/internal/db"
-	"lure.sh/lure/internal/pager"
-	"lure.sh/lure/internal/translations"
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/internal/db"
+	"github.com/sintan1729/lure/internal/pager"
+	"github.com/sintan1729/lure/internal/translations"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 )
 
 // YesNoPrompt asks the user a yes or no question, using def as the default answer

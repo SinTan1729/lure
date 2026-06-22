@@ -24,7 +24,7 @@ import (
 	"strings"
 	"sync"
 
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 	"golang.org/x/text/language"
 )
 

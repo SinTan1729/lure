@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/internal/db"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/internal/db"
 )
 
 // Filter represents search filters.

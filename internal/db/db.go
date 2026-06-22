@@ -29,8 +29,8 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/exp/slices"
-	"lure.sh/lure/internal/config"
-	"lure.sh/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/internal/config"
+	"github.com/sintan1729/lure/pkg/loggerctx"
 	"modernc.org/sqlite"
 )
 

@@ -1,4 +1,4 @@
-module lure.sh/lure
+module github.com/sintan1729/lure
 
 go 1.26.4
 

@@ -22,9 +22,9 @@ import (
 	"reflect"
 	"strings"
 
-	"lure.sh/lure/internal/cpu"
-	"lure.sh/lure/internal/db"
-	"lure.sh/lure/pkg/distro"
+	"github.com/sintan1729/lure/internal/cpu"
+	"github.com/sintan1729/lure/internal/db"
+	"github.com/sintan1729/lure/pkg/distro"
 	"golang.org/x/exp/slices"
 	"golang.org/x/text/language"
 )
