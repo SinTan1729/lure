@@ -1,0 +1,285 @@
+.TH LURE 1 "June 2026" "LURE" "User Commands"
+
+.SH NAME
+lure \- Linux User REpository
+
+.SH SYNOPSIS
+.B lure
+COMMAND [OPTIONS] [ARGS...]
+
+.SH DESCRIPTION
+LURE is a package management utility that installs and manages packages
+from LURE repositories and integrates with the system package manager.
+
+Many commands support partial package names, matching against package
+provides entries, and the '%' wildcard.
+
+.SH COMMANDS
+
+.TP
+.B install, in
+Install a package from LURE repositories.
+
+If a package is not found in LURE repositories, the request is forwarded
+to the system package manager.
+
+By default, cached builds are used when available.
+
+Options:
+
+.RS
+.TP
+.BR -c ", " --clean
+Force rebuilding the package instead of using a cached build.
+.RE
+
+Examples:
+
+.nf
+lure in itd-bin
+lure in itd
+lure in it%
+lure in -c itd-bin
+.fi
+
+.TP
+.B remove, rm
+Remove a package.
+
+This command simply forwards the removal request to the system package
+manager.
+
+Example:
+
+.nf
+lure rm firefox
+.fi
+
+.TP
+.B upgrade, up
+Upgrade installed packages that correspond to packages available in
+LURE repositories.
+
+Package versions are compared using the rpmvercmp algorithm.
+
+Options:
+
+.RS
+.TP
+.BR -c ", " --clean
+Force rebuilding packages instead of using cached builds.
+.RE
+
+Example:
+
+.nf
+lure up
+.fi
+
+.TP
+.B info
+Display information about a package in LURE repositories.
+
+Supports partial matches, provides matching, and '%' wildcards.
+
+Examples:
+
+.nf
+lure info itd-bin
+lure info itd
+lure info it%
+.fi
+
+.TP
+.B list, ls
+List available packages in LURE repositories and their versions.
+
+Supports optional filtering patterns.
+
+Options:
+
+.RS
+.TP
+.BR -I ", " --installed
+Show only packages currently installed on the system.
+.RE
+
+Examples:
+
+.nf
+lure ls
+lure ls -I
+lure ls i%
+lure ls %d
+lure ls -I i%
+.fi
+
+.TP
+.B build
+Build a package using a lure.sh build script.
+
+Options:
+
+.RS
+.TP
+.BR -s " PATH"
+Specify an alternate build script path.
+.RE
+
+Example:
+
+.nf
+lure build
+.fi
+
+.TP
+.B addrepo, ar
+Add a repository.
+
+Required options:
+
+.RS
+.TP
+.BR -n " NAME"
+Repository name.
+.TP
+.BR -u " URL"
+Repository URL.
+.RE
+
+Example:
+
+.nf
+lure ar -n default -u https://github.com/Elara6331/lure-repo
+.fi
+
+.TP
+.B removerepo, rr
+Remove a repository and its contents.
+
+Required options:
+
+.RS
+.TP
+.BR -n " NAME"
+Repository name.
+.RE
+
+Example:
+
+.nf
+lure rr -n default
+.fi
+
+.TP
+.B refresh, ref
+Pull updates from all configured repositories that have changed.
+
+Example:
+
+.nf
+lure ref
+.fi
+
+.TP
+.B fix
+Attempt to repair LURE by deleting and rebuilding its cache.
+
+Example:
+
+.nf
+lure fix
+.fi
+
+.TP
+.B version
+Display the current LURE version and exit.
+
+Example:
+
+.nf
+lure version
+.fi
+
+.SH ENVIRONMENT
+
+.TP
+.B LURE_DISTRO
+Target distribution used when building packages.
+
+Values should match the ID field from
+.I /etc/os-release
+or
+.I /usr/lib/os-release.
+
+Common values:
+
+.nf
+arch
+alpine
+opensuse
+debian
+.fi
+
+.TP
+.B LURE_PKG_FORMAT
+Package format to generate.
+
+Supported values:
+
+.nf
+archlinux
+apk
+rpm
+deb
+.fi
+
+.TP
+.B LURE_ARM_VARIANT
+ARM architecture variant to target when building on ARM systems.
+
+Supported values:
+
+.nf
+arm5
+arm6
+arm7
+.fi
+
+.SH CROSS-PACKAGING
+
+Packages may be built for other distributions by setting
+.B LURE_DISTRO
+and
+.B LURE_PKG_FORMAT
+appropriately.
+
+Examples:
+
+.nf
+LURE_DISTRO=arch     LURE_PKG_FORMAT=archlinux lure build
+LURE_DISTRO=alpine   LURE_PKG_FORMAT=apk       lure build
+LURE_DISTRO=opensuse LURE_PKG_FORMAT=rpm       lure build
+LURE_DISTRO=debian   LURE_PKG_FORMAT=deb       lure build
+.fi
+
+.SH FILES
+
+.TP
+.I /etc/os-release
+Distribution identification source.
+
+.TP
+.I /usr/lib/os-release
+Alternative distribution identification source.
+
+.SH SEE ALSO
+
+rpmvercmp(7)
+
+.SH AUTHORS
+
+Elara elara[at]elara[dot]ws
+
+Sayantan Santra sayantan[dot]santra689[at]gmail[dot]com
+
