@@ -260,11 +260,18 @@ func executeFirstPass(ctx context.Context, info *distro.OSRelease, fl *syntax.Fi
 // getDirs returns the appropriate directories for the script
 func getDirs(ctx context.Context, vars *types.BuildVars, script string) types.Directories {
 	baseDir := filepath.Join(config.GetPaths(ctx).PkgsDir, vars.Name)
+	var scriptDir string
+	cwd, err := os.Getwd()
+	if filepath.IsLocal(script) && err == nil {
+		scriptDir = filepath.Dir(filepath.Join(cwd, script))
+	} else {
+		scriptDir = filepath.Dir(script)
+	}
 	return types.Directories{
 		BaseDir:   baseDir,
 		SrcDir:    filepath.Join(baseDir, "src"),
 		PkgDir:    filepath.Join(baseDir, "pkg"),
-		ScriptDir: filepath.Dir(script),
+		ScriptDir: scriptDir,
 	}
 }
 
