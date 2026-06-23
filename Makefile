@@ -18,8 +18,8 @@ release: build
 		fi; \
 		tar -czf "$$f.tar.gz" \
 			-C target "$$(basename "$$f")" \
-			-C .. scripts/completion \
-			-C docs lure.1; \
+			-C ../scripts completion \
+			-C ../docs lure.1; \
 	done
 
 clean:
