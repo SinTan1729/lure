@@ -22,7 +22,7 @@ release: build
 	done
 
 clean:
-	rm -rf target/*
+	rm -rf target/lure-*
 
 install: lure installmisc
 	install -Dm755 lure $(DESTDIR)$(PREFIX)/bin/lure
