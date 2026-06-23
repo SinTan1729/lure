@@ -1,17 +1,18 @@
 package main
 
 import (
+	"context"
 	"os"
 
-	"github.com/urfave/cli/v2"
 	"github.com/sintan1729/lure/pkg/gen"
+	"github.com/urfave/cli/v3"
 )
 
 var genCmd = &cli.Command{
 	Name:    "generate",
 	Usage:   "Generate a LURE script from a template",
 	Aliases: []string{"gen"},
-	Subcommands: []*cli.Command{
+	Commands: []*cli.Command{
 		genPipCmd,
 	},
 }
@@ -35,7 +36,7 @@ var genPipCmd = &cli.Command{
 			Aliases: []string{"d"},
 		},
 	},
-	Action: func(c *cli.Context) error {
+	Action: func(ctx context.Context, c *cli.Command) error {
 		return gen.Pip(os.Stdout, gen.PipOptions{
 			Name:        c.String("name"),
 			Version:     c.String("version"),

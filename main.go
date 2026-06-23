@@ -26,16 +26,16 @@ import (
 	"syscall"
 
 	"github.com/mattn/go-isatty"
-	"github.com/urfave/cli/v2"
-	"go.elara.ws/logger"
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
 	"github.com/sintan1729/lure/internal/translations"
 	"github.com/sintan1729/lure/pkg/loggerctx"
 	"github.com/sintan1729/lure/pkg/manager"
+	"github.com/urfave/cli/v3"
+	"go.elara.ws/logger"
 )
 
-var app = &cli.App{
+var app = &cli.Command{
 	Name:  "lure",
 	Usage: "Linux User REpository",
 	Flags: []cli.Flag{
@@ -66,8 +66,7 @@ var app = &cli.App{
 		helperCmd,
 		versionCmd,
 	},
-	Before: func(c *cli.Context) error {
-		ctx := c.Context
+	Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
 		log := loggerctx.From(ctx)
 
 		cmd := c.Args().First()
@@ -80,18 +79,18 @@ var app = &cli.App{
 			manager.Args = append(manager.Args, args...)
 		}
 
-		return nil
+		return ctx, nil
 	},
-	After: func(ctx *cli.Context) error {
+	After: func(ctx context.Context, c *cli.Command) error {
 		return db.Close()
 	},
-	EnableBashCompletion: true,
+	EnableShellCompletion: true,
 }
 
 var versionCmd = &cli.Command{
 	Name:  "version",
 	Usage: "Print the current LURE version and exit",
-	Action: func(ctx *cli.Context) error {
+	Action: func(ctx context.Context, c *cli.Command) error {
 		println(config.Version)
 		return nil
 	},
@@ -108,7 +107,7 @@ func main() {
 	ctx, cancel := signal.NotifyContext(ctx, syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 
-	err := app.RunContext(ctx, os.Args)
+	err := app.Run(ctx, os.Args)
 	if err != nil {
 		log.Error("Error while running app").Err(err).Send()
 	}

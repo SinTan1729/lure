@@ -1,24 +1,25 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
 
-	"github.com/urfave/cli/v2"
 	"github.com/sintan1729/lure/internal/cpu"
 	"github.com/sintan1729/lure/internal/shutils/helpers"
 	"github.com/sintan1729/lure/pkg/distro"
 	"github.com/sintan1729/lure/pkg/loggerctx"
+	"github.com/urfave/cli/v3"
 	"mvdan.cc/sh/v3/expand"
 	"mvdan.cc/sh/v3/interp"
 )
 
 var helperCmd = &cli.Command{
-	Name:        "helper",
-	Usage:       "Run a LURE helper command",
-	ArgsUsage:   `<helper_name|"list">`,
-	Subcommands: []*cli.Command{helperListCmd},
+	Name:      "helper",
+	Usage:     "Run a LURE helper command",
+	ArgsUsage: `<helper_name|"list">`,
+	Commands:  []*cli.Command{helperListCmd},
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "dest-dir",
@@ -27,8 +28,7 @@ var helperCmd = &cli.Command{
 			Value:   "dest",
 		},
 	},
-	Action: func(c *cli.Context) error {
-		ctx := c.Context
+	Action: func(ctx context.Context, c *cli.Command) error {
 		log := loggerctx.From(ctx)
 
 		if c.Args().Len() < 1 {
@@ -66,7 +66,7 @@ var helperCmd = &cli.Command{
 		return helper(hc, c.Args().First(), c.Args().Slice()[1:])
 	},
 	CustomHelpTemplate: cli.CommandHelpTemplate,
-	BashComplete: func(ctx *cli.Context) {
+	ShellComplete: func(ctx context.Context, c *cli.Command) {
 		for name := range helpers.Helpers {
 			fmt.Println(name)
 		}
@@ -77,7 +77,7 @@ var helperListCmd = &cli.Command{
 	Name:    "list",
 	Usage:   "List all the available helper commands",
 	Aliases: []string{"ls"},
-	Action: func(ctx *cli.Context) error {
+	Action: func(ctx context.Context, c *cli.Command) error {
 		for name := range helpers.Helpers {
 			fmt.Println(name)
 		}

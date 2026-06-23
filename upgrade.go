@@ -22,7 +22,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/urfave/cli/v2"
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
 	"github.com/sintan1729/lure/internal/types"
@@ -31,6 +30,7 @@ import (
 	"github.com/sintan1729/lure/pkg/loggerctx"
 	"github.com/sintan1729/lure/pkg/manager"
 	"github.com/sintan1729/lure/pkg/repos"
+	"github.com/urfave/cli/v3"
 	"go.elara.ws/vercmp"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
@@ -47,8 +47,7 @@ var upgradeCmd = &cli.Command{
 			Usage:   "Build package from scratch even if there's an already built package available",
 		},
 	},
-	Action: func(c *cli.Context) error {
-		ctx := c.Context
+	Action: func(ctx context.Context, c *cli.Command) error {
 		log := loggerctx.From(ctx)
 
 		info, err := distro.ParseOSRelease(ctx)

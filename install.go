@@ -19,9 +19,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/urfave/cli/v2"
 	"github.com/sintan1729/lure/internal/cliutils"
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
@@ -30,6 +30,7 @@ import (
 	"github.com/sintan1729/lure/pkg/loggerctx"
 	"github.com/sintan1729/lure/pkg/manager"
 	"github.com/sintan1729/lure/pkg/repos"
+	"github.com/urfave/cli/v3"
 )
 
 var installCmd = &cli.Command{
@@ -43,8 +44,7 @@ var installCmd = &cli.Command{
 			Usage:   "Build package from scratch even if there's an already built package available",
 		},
 	},
-	Action: func(c *cli.Context) error {
-		ctx := c.Context
+	Action: func(ctx context.Context, c *cli.Command) error {
 		log := loggerctx.From(ctx)
 
 		args := c.Args()
@@ -75,9 +75,9 @@ var installCmd = &cli.Command{
 		})
 		return nil
 	},
-	BashComplete: func(c *cli.Context) {
-		log := loggerctx.From(c.Context)
-		result, err := db.GetPkgs(c.Context, "true")
+	ShellComplete: func(ctx context.Context, c *cli.Command) {
+		log := loggerctx.From(ctx)
+		result, err := db.GetPkgs(ctx, "true")
 		if err != nil {
 			log.Fatal("Error getting packages").Err(err).Send()
 		}
@@ -99,8 +99,8 @@ var removeCmd = &cli.Command{
 	Name:    "remove",
 	Usage:   "Remove an installed package",
 	Aliases: []string{"rm"},
-	Action: func(c *cli.Context) error {
-		log := loggerctx.From(c.Context)
+	Action: func(ctx context.Context, c *cli.Command) error {
+		log := loggerctx.From(ctx)
 
 		args := c.Args()
 		if args.Len() < 1 {

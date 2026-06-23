@@ -19,14 +19,15 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/urfave/cli/v2"
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
 	"github.com/sintan1729/lure/pkg/loggerctx"
 	"github.com/sintan1729/lure/pkg/manager"
 	"github.com/sintan1729/lure/pkg/repos"
+	"github.com/urfave/cli/v3"
 	"golang.org/x/exp/slices"
 )
 
@@ -40,8 +41,7 @@ var listCmd = &cli.Command{
 			Aliases: []string{"I"},
 		},
 	},
-	Action: func(c *cli.Context) error {
-		ctx := c.Context
+	Action: func(ctx context.Context, c *cli.Command) error {
 		log := loggerctx.From(ctx)
 
 		err := repos.Pull(ctx, config.Config(ctx).Repos)

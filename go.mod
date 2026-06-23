@@ -20,6 +20,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.4.0
 	github.com/schollz/progressbar/v3 v3.19.0
 	github.com/urfave/cli/v2 v2.27.7
+	github.com/urfave/cli/v3 v3.10.0
 	github.com/vmihailenco/msgpack/v5 v5.4.1
 	go.elara.ws/logger v0.0.0-20240720233222-35a314443645
 	go.elara.ws/translate v0.0.0-20231003203641-fdbdff5fcc2f
