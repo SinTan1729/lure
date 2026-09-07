@@ -87,13 +87,14 @@ info "Found latest LURE version:" $latestVersion
 arch=$(uname -m)
 case $arch in
 armv*) arch="arm" ;;
-i686) arch="i386" ;;
+i686) arch="386" ;;
+x86_64) arch="amd64" ;;
 esac
 
 tmpdir=$(mktemp -d -t lure-bootstrap.XXXXXXX)
 cd $tmpdir
 # Use ${arch} instead of $(uname -m)
-filename="lure-${latestVersion}-linux-${arch}"
+filename="lure-v${latestVersion}-linux-${arch}"
 url="https://github.com/Sintan1729/lure/releases/download/${latestVersion}/${filename}.tar.gz"
 
 info "Downloading LURE package"
@@ -104,8 +105,7 @@ url="https://raw.githubusercontent.com/SinTan1729/lure-repo/refs/heads/main/linu
 curl -L $url -o lure.sh
 
 info "Installing LURE package"
-mv $filename lure
-./lure build
+./$filename/lure build
 installPkg $pkgMgr $tmpdir/linux-user-repository-bin*.$pkgFormat
 
 info "Cleaning up"
