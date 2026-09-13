@@ -2,8 +2,6 @@
 
 # LURE (Linux User REpository)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/sintan1729/lure)](https://goreportcard.com/report/github.com/sintan1729/lure)
-
 LURE is a distro-agnostic build system for Linux, similar to the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository). It is currently in **beta**. Most major bugs have been fixed, and most major features have been added. LURE is ready for general use, but may still break or change occasionally.
 
 LURE is written in pure Go and has zero dependencies after building. The only things LURE requires are a command for privilege elevation such as `sudo`, `doas`, etc. as well as a supported package manager. Currently, LURE supports `apt`, `pacman`, `apk`, `dnf`, `yum`, and `zypper`. If a supported package manager exists on your system, it will be detected and used automatically.
