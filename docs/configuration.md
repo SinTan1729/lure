@@ -7,19 +7,19 @@ This page describes the configuration of LURE
 ## Table of Contents
 
 - [Config file](#config-file)
-    - [rootCmd](#rootcmd)
-    - [repo](#repo)
+  - [rootCmd](#rootcmd)
+  - [repo](#repo)
 
 ---
 
 ## File locations
 
-| Path | Description 
-| --:  | :--
-| ~/.config/lure/lure.toml | Config file
-| ~/.cache/lure/pkgs       | here the packages are built and stored
-| ~/.cache/lure/repo       | here are the git repos with all the `lure.sh` files  
-|                          | Example: `~/.cache/lure/repo/default/itd-bin/lure.sh`
+|                     Path | Description                                           |
+| -----------------------: | :---------------------------------------------------- |
+| ~/.config/lure/lure.toml | Config file                                           |
+|       ~/.cache/lure/pkgs | here the packages are built and stored                |
+|       ~/.cache/lure/repo | here are the git repos with all the `lure.sh` files   |
+|                          | Example: `~/.cache/lure/repo/default/itd-bin/lure.sh` |
 
 ---
 
@@ -28,6 +28,10 @@ This page describes the configuration of LURE
 ### rootCmd
 
 The `rootCmd` field in the config specifies which command should be used for privilege elevation. The default value is `sudo`.
+
+### topgradeAllowYes
+
+This is a bool field, defaulting to `false`. If set to `true`, it will detect when lure is run via `topgrade` with `assume-yes`.
 
 ### repo
 
