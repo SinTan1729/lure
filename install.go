@@ -67,11 +67,12 @@ var installCmd = &cli.Command{
 			log.Fatal("Error finding packages").Err(err).Send()
 		}
 
-		pkgs := cliutils.FlattenPkgs(ctx, found, "install", c.Bool("interactive"))
+		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
+		pkgs := cliutils.FlattenPkgs(ctx, found, "install", interactive)
 		build.InstallPkgs(ctx, pkgs, notFound, types.BuildOpts{
 			Manager:     mgr,
 			Clean:       c.Bool("clean"),
-			Interactive: c.Bool("interactive"),
+			Interactive: interactive,
 		})
 		return nil
 	},

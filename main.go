@@ -50,6 +50,12 @@ var app = &cli.Command{
 			Value:   isatty.IsTerminal(os.Stdin.Fd()),
 			Usage:   "Enable interactive questions and prompts",
 		},
+		&cli.BoolFlag{
+			Name:    "assume-yes",
+			Aliases: []string{"y"},
+			Value:   false,
+			Usage:   "Say yes to package manager question",
+		},
 	},
 	Commands: []*cli.Command{
 		installCmd,
@@ -77,6 +83,9 @@ var app = &cli.Command{
 		if trimmed := strings.TrimSpace(c.String("pm-args")); trimmed != "" {
 			args := strings.Split(trimmed, " ")
 			manager.Args = append(manager.Args, args...)
+		}
+		if c.Bool("assume-yes") {
+			manager.DefaultOpts.NoConfirm = true
 		}
 
 		return ctx, nil

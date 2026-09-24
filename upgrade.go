@@ -70,11 +70,12 @@ var upgradeCmd = &cli.Command{
 			log.Fatal("Error checking for updates").Err(err).Send()
 		}
 
+		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
 		if len(updates) > 0 {
 			build.InstallPkgs(ctx, updates, nil, types.BuildOpts{
 				Manager:     mgr,
 				Clean:       c.Bool("clean"),
-				Interactive: c.Bool("interactive"),
+				Interactive: interactive,
 			})
 		} else {
 			log.Info("There is nothing to do.").Send()

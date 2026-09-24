@@ -72,11 +72,12 @@ var buildCmd = &cli.Command{
 			log.Fatal("Unable to detect a supported package manager on the system").Send()
 		}
 
+		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
 		pkgPaths, _, err := build.BuildPackage(ctx, types.BuildOpts{
 			Script:      script,
 			Manager:     mgr,
 			Clean:       c.Bool("clean"),
-			Interactive: c.Bool("interactive"),
+			Interactive: interactive,
 		})
 		if err != nil {
 			log.Fatal("Error building package").Err(err).Send()

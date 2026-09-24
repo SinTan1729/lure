@@ -65,7 +65,8 @@ var infoCmd = &cli.Command{
 			os.Exit(1)
 		}
 
-		pkgs := cliutils.FlattenPkgs(ctx, found, "show", c.Bool("interactive"))
+		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
+		pkgs := cliutils.FlattenPkgs(ctx, found, "show", interactive)
 
 		var names []string
 		all := c.Bool("all")
