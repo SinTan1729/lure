@@ -38,6 +38,7 @@ var defaultConfig = &types.Config{
 			URL:  "https://github.com/SinTan1729/lure-repo.git",
 		},
 	},
+	TopgradeAssumeYes: false,
 }
 
 var (

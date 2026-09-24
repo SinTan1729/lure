@@ -21,6 +21,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/sintan1729/lure/internal/cliutils"
 	"github.com/sintan1729/lure/internal/config"
@@ -67,7 +68,8 @@ var installCmd = &cli.Command{
 			log.Fatal("Error finding packages").Err(err).Send()
 		}
 
-		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
+		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
+		interactive := !assume_yes && c.Bool("interactive")
 		pkgs := cliutils.FlattenPkgs(ctx, found, "install", interactive)
 		build.InstallPkgs(ctx, pkgs, notFound, types.BuildOpts{
 			Manager:     mgr,

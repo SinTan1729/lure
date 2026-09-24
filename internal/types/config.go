@@ -20,11 +20,12 @@ package types
 
 // Config represents the LURE configuration file
 type Config struct {
-	RootCmd          string   `toml:"rootCmd"`
-	PagerStyle       string   `toml:"pagerStyle"`
-	IgnorePkgUpdates []string `toml:"ignorePkgUpdates"`
-	Repos            []Repo   `toml:"repo"`
-	Unsafe           Unsafe   `toml:"unsafe"`
+	RootCmd           string   `toml:"rootCmd"`
+	PagerStyle        string   `toml:"pagerStyle"`
+	IgnorePkgUpdates  []string `toml:"ignorePkgUpdates"`
+	Repos             []Repo   `toml:"repo"`
+	Unsafe            Unsafe   `toml:"unsafe"`
+	TopgradeAssumeYes bool     `toml:"topgradeAssumeYes"`
 }
 
 // Repo represents a LURE repo within a configuration file

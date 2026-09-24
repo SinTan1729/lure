@@ -21,6 +21,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
@@ -70,7 +71,8 @@ var upgradeCmd = &cli.Command{
 			log.Fatal("Error checking for updates").Err(err).Send()
 		}
 
-		interactive := !c.Bool("assume-yes") && c.Bool("interactive")
+		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
+		interactive := !assume_yes && c.Bool("interactive")
 		if len(updates) > 0 {
 			build.InstallPkgs(ctx, updates, nil, types.BuildOpts{
 				Manager:     mgr,
@@ -85,7 +87,7 @@ var upgradeCmd = &cli.Command{
 	},
 }
 
-func checkForUpdates(ctx context.Context, mgr manager.Manager, info *distro.OSRelease) ([]db.Package, error) {
+func checkForUpdates(ctx context.Context, mgr manager.Manager, _ *distro.OSRelease) ([]db.Package, error) {
 	installed, err := mgr.ListInstalled(nil)
 	if err != nil {
 		return nil, err
