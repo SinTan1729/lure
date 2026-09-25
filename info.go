@@ -65,7 +65,7 @@ var infoCmd = &cli.Command{
 			os.Exit(1)
 		}
 
-		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
+		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeInheritAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
 		interactive := !assume_yes && c.Bool("interactive")
 		pkgs := cliutils.FlattenPkgs(ctx, found, "show", interactive)
 

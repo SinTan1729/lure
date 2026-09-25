@@ -72,7 +72,7 @@ var buildCmd = &cli.Command{
 			log.Fatal("Unable to detect a supported package manager on the system").Send()
 		}
 
-		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
+		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeInheritAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
 		interactive := !assume_yes && c.Bool("interactive")
 		pkgPaths, _, err := build.BuildPackage(ctx, types.BuildOpts{
 			Script:      script,

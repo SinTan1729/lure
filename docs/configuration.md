@@ -29,7 +29,7 @@ This page describes the configuration of LURE
 
 The `rootCmd` field in the config specifies which command should be used for privilege elevation. The default value is `sudo`.
 
-### topgradeAssumeYes
+### topgradeInheritAssumeYes
 
 This is a bool field, defaulting to `false`. If set to `true`, it will detect when lure is run via `topgrade` with `assume-yes`.
 
