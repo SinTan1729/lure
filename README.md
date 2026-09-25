@@ -40,9 +40,7 @@ curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/main/scr
 
 ### Packages
 
-Distro packages and binary archives are provided at the latest Gitea release: https://github.com/Sintan1729/lure/releases/latest
-
-LURE is also available on the AUR as [linux-user-repository-bin](https://aur.archlinux.org/packages/linux-user-repository-bin)
+Binary archives are provided at the [latest GitHub release](https://github.com/Sintan1729/lure/releases/latest).
 
 ### Building from source
 
