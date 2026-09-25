@@ -28,6 +28,7 @@ import (
 	"github.com/sintan1729/lure/internal/overrides"
 	"github.com/sintan1729/lure/pkg/distro"
 	"github.com/sintan1729/lure/pkg/loggerctx"
+	"github.com/sintan1729/lure/pkg/manager"
 	"github.com/sintan1729/lure/pkg/repos"
 	"github.com/urfave/cli/v3"
 	"gopkg.in/yaml.v3"
@@ -65,8 +66,7 @@ var infoCmd = &cli.Command{
 			os.Exit(1)
 		}
 
-		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeInheritAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
-		interactive := !assume_yes && c.Bool("interactive")
+		interactive := !manager.NoConfirm
 		pkgs := cliutils.FlattenPkgs(ctx, found, "show", interactive)
 
 		var names []string

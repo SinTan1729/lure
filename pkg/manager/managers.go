@@ -38,6 +38,7 @@ var DefaultOpts = &Opts{
 
 // DefaultRootCmd is the command used for privilege elevation by default
 var DefaultRootCmd = "sudo"
+var NoConfirm = false
 
 var managers = []Manager{
 	&Pacman{},
@@ -119,6 +120,8 @@ func ensureOpts(opts *Opts) *Opts {
 	if opts == nil {
 		opts = DefaultOpts
 	}
+	opts.NoConfirm = NoConfirm
+
 	opts.Args = append(opts.Args, Args...)
 	return opts
 }

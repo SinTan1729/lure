@@ -21,7 +21,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
@@ -71,13 +70,11 @@ var upgradeCmd = &cli.Command{
 			log.Fatal("Error checking for updates").Err(err).Send()
 		}
 
-		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeInheritAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
-		interactive := !assume_yes && c.Bool("interactive")
 		if len(updates) > 0 {
 			build.InstallPkgs(ctx, updates, nil, types.BuildOpts{
 				Manager:     mgr,
 				Clean:       c.Bool("clean"),
-				Interactive: interactive,
+				Interactive: !manager.NoConfirm,
 			})
 		} else {
 			log.Info("There is nothing to do.").Send()

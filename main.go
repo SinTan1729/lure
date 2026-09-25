@@ -85,7 +85,7 @@ var app = &cli.Command{
 			manager.Args = append(manager.Args, args...)
 		}
 		assume_yes := c.Bool("assume-yes") || (config.Config(ctx).TopgradeInheritAssumeYes && os.Getenv("TOPGRADE_YES") == "1")
-		manager.DefaultOpts.NoConfirm = assume_yes || !c.Bool("interactive")
+		manager.NoConfirm = assume_yes || !c.Bool("interactive")
 
 		return ctx, nil
 	},
