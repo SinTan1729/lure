@@ -33,7 +33,7 @@ rm -rf ~/.cache/lure
 The LURE install script will automatically download and install the appropriate LURE package on your system. To use it, simply run the following command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/master/scripts/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/main/scripts/bootstrap.sh | bash
 ```
 
 **IMPORTANT**: This will download and run the script from GitHub. Please look through any script you download from the internet (including this one) before running it.
