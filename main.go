@@ -36,8 +36,9 @@ import (
 )
 
 var app = &cli.Command{
-	Name:  "lure",
-	Usage: "Linux User REpository",
+	Name:    "lure",
+	Usage:   "Linux User REpository",
+	Version: config.Version,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "pm-args",
@@ -70,7 +71,6 @@ var app = &cli.Command{
 		fixCmd,
 		genCmd,
 		helperCmd,
-		versionCmd,
 	},
 	Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
 		log := loggerctx.From(ctx)
@@ -95,15 +95,6 @@ var app = &cli.Command{
 	EnableShellCompletion: true,
 }
 
-var versionCmd = &cli.Command{
-	Name:  "version",
-	Usage: "Print the current LURE version and exit",
-	Action: func(ctx context.Context, c *cli.Command) error {
-		println(config.Version)
-		return nil
-	},
-}
-
 func main() {
 	ctx := context.Background()
 	log := translations.NewLogger(ctx, logger.NewCLI(os.Stderr), config.Language(ctx))
@@ -115,6 +106,16 @@ func main() {
 	ctx, cancel := signal.NotifyContext(ctx, syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 
+	cli.VersionFlag = &cli.BoolFlag{
+		Name:    "version",
+		Aliases: []string{"V"},
+		Usage:   "Print the version",
+	}
+	cli.HelpFlag = &cli.BoolFlag{
+		Name:    "help",
+		Aliases: []string{"h"},
+		Usage:   "Show help",
+	}
 	err := app.Run(ctx, os.Args)
 	if err != nil {
 		log.Error("Error while running app").Err(err).Send()
