@@ -36,9 +36,11 @@ import (
 )
 
 var app = &cli.Command{
-	Name:    "lure",
-	Usage:   "Linux User REpository",
-	Version: config.Version,
+	Name:        "lure",
+	Version:     "v" + config.Version,
+	Usage:       "Linux User REpository",
+	Description: "A distro-agnostic build system for Linux",
+	Authors:     []any{"SinTan1729", "Elara6331"},
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "pm-args",
