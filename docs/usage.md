@@ -3,21 +3,22 @@
 ## Table of Contents
 
 - [Commands](#commands)
-    - [install](#install)
-    - [remove](#remove)
-    - [upgrade](#upgrade)
-    - [info](#info)
-    - [list](#list)
-    - [build](#build)
-    - [addrepo](#addrepo)
-    - [removerepo](#removerepo)
-    - [refresh](#refresh)
-    - [fix](#fix)
-    - [version](#version)
+  - [install](#install)
+  - [remove](#remove)
+  - [upgrade](#upgrade)
+  - [info](#info)
+  - [list](#list)
+  - [build](#build)
+  - [addrepo](#addrepo)
+  - [removerepo](#removerepo)
+  - [refresh](#refresh)
+  - [fix](#fix)
+- [Arguments](#arguments)
+  - [--version](#version)
 - [Environment Variables](#environment-variables)
-    - [LURE_DISTRO](#lure_distro)
-    - [LURE_PKG_FORMAT](#lure_pkg_format)
-    - [LURE_ARM_VARIANT](#lure_arm_variant)
+  - [LURE_DISTRO](#lure_distro)
+  - [LURE_PKG_FORMAT](#lure_pkg_format)
+  - [LURE_ARM_VARIANT](#lure_arm_variant)
 
 ---
 
@@ -150,6 +151,10 @@ Example:
 lure fix
 ```
 
+---
+
+## Arguments
+
 ### version
 
 The version command returns the current LURE version and exits
@@ -157,7 +162,7 @@ The version command returns the current LURE version and exits
 Example:
 
 ```shell
-lure version
+lure --version
 ```
 
 ---
