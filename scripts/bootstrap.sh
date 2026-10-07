@@ -85,12 +85,6 @@ latestVersion=$(curl -sI 'https://github.com/SinTan1729/lure/releases/latest' | 
 info "Found latest LURE version:" $latestVersion
 
 arch=$(uname -m)
-case $arch in
-armv*) arch="arm" ;;
-i686) arch="386" ;;
-x86_64) arch="amd64" ;;
-esac
-
 tmpdir=$(mktemp -d -t lure-bootstrap.XXXXXXX)
 cd $tmpdir
 # Use ${arch} instead of $(uname -m)

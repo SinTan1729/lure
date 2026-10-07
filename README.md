@@ -38,6 +38,8 @@ curl -fsSL https://raw.githubusercontent.com/SinTan1729/lure/refs/heads/main/scr
 
 **IMPORTANT**: This will download and run the script from GitHub. Please look through any script you download from the internet (including this one) before running it.
 
+It will only work on `linux`, on the following architectures: `x86_64`, `arm64`, `armv5`. `armv6`, `armv7`, `i686`, and `riscv64`.
+
 ### Packages
 
 Binary archives are provided at the [latest GitHub release](https://github.com/Sintan1729/lure/releases/latest).
