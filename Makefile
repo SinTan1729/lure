@@ -26,8 +26,8 @@ release: build-all gencmp
 		mv "target/$$d" "target/$$t"; \
 		tar -czf "target/$$t.tar.gz" -C target "$$t"; \
 	done
-# gh release create "${GIT_VERSION}" --notes "$$(git-cliff --latest --github-token ${GH_TOKEN})" "target/*.tar.gz"
-# $(MAKE) clean
+	gh release create "${GIT_VERSION}" --notes "$$(git-cliff --latest --github-token ${GH_TOKEN})" "target/*.tar.gz"
+	$(MAKE) clean
 
 gencmp: lure
 	target/lure completion bash > target/lure.bash
