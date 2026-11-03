@@ -1,6 +1,6 @@
 module github.com/sintan1729/lure
 
-go 1.26.4
+go 1.27.3
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
