@@ -6,7 +6,7 @@ lure:
 
 build-all:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/x86_64/lure"
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/arm64/lure"
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/arm64/lure"
 	GOOS=linux GOARM=5 GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/armv5/lure"
 	GOOS=linux GOARM=6 GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/armv6/lure"
 	GOOS=linux GOARM=7 GOARCH=arm CGO_ENABLED=0 go build -ldflags="-X 'github.com/sintan1729/lure/internal/config.Version=$(GIT_VERSION)'" -o "target/armv7/lure"
