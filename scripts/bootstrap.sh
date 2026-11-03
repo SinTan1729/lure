@@ -84,10 +84,16 @@ fi
 latestVersion=$(curl -sI 'https://github.com/SinTan1729/lure/releases/latest' | grep -io 'location: .*' | rev | cut -d '/' -f1 | rev | tr -d '[:space:]')
 info "Found latest LURE version:" $latestVersion
 
-arch=$(uname -m)
 tmpdir=$(mktemp -d -t lure-bootstrap.XXXXXXX)
 cd $tmpdir
-# Use ${arch} instead of $(uname -m)
+arch=$(uname -m)
+case "$arch" in
+"aarch64") arch="arm64" ;;
+"armv7l") arch="armv7" ;;
+"armv6l") arch="armv6" ;;
+"armv5tel") arch="armv5" ;;
+"i386") arch="i686" ;;
+esac
 filename="lure-v${latestVersion}-linux-${arch}"
 url="https://github.com/Sintan1729/lure/releases/download/${latestVersion}/${filename}.tar.gz"
 
