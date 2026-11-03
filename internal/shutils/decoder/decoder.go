@@ -26,6 +26,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/sintan1729/lure/internal/overrides"
+	"github.com/sintan1729/lure/internal/shutils/handlers"
 	"github.com/sintan1729/lure/pkg/distro"
 	"golang.org/x/exp/slices"
 	"mvdan.cc/sh/v3/expand"
@@ -162,7 +163,11 @@ func (d *Decoder) DecodeVars(val any) error {
 	return nil
 }
 
-type ScriptFunc func(ctx context.Context, opts ...interp.RunnerOption) error
+type ScriptFunc func(
+	ctx context.Context,
+	handler interp.ExecHandlerFunc,
+	opts ...interp.RunnerOption,
+) error
 
 // GetFunc returns a function corresponding to a bash function
 // with the given name
@@ -172,11 +177,16 @@ func (d *Decoder) GetFunc(name string) (ScriptFunc, bool) {
 		return nil, false
 	}
 
-	return func(ctx context.Context, opts ...interp.RunnerOption) error {
+	return func(ctx context.Context, handler interp.ExecHandlerFunc, opts ...interp.RunnerOption) error {
 		sub := d.Runner.Subshell()
+
 		for _, opt := range opts {
-			opt(sub)
+			if err := opt(sub); err != nil {
+				return err
+			}
 		}
+
+		ctx = handlers.WithExecHandler(ctx, handler)
 		return sub.Run(ctx, fn)
 	}, true
 }

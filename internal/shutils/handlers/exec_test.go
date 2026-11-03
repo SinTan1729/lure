@@ -73,7 +73,9 @@ func TestExecFuncs(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	runner, err := interp.New()
+	runner, err := interp.New(
+		interp.ExecHandlers(handlers.PerInvocationExec),
+	)
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -113,9 +115,10 @@ func TestExecFuncs(t *testing.T) {
 		return nil
 	}
 
-	err = fn(ctx, interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
-		return eh.ExecHandler(fbHandler)
-	}))
+	// err = fn(ctx, interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+	// 	return eh.ExecHandler(fbHandler)
+	// }))
+	err = fn(ctx, eh.ExecHandler(fbHandler))
 	if err != nil {
 		t.Errorf("Expected no error, got %s", err)
 	}

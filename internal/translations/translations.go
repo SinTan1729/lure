@@ -23,9 +23,9 @@ import (
 	"embed"
 	"sync"
 
-	"go.elara.ws/logger"
+	"github.com/sintan1729/lure/internal/logger"
+	"github.com/sintan1729/lure/internal/translate"
 	"github.com/sintan1729/lure/pkg/loggerctx"
-	"go.elara.ws/translate"
 	"golang.org/x/text/language"
 )
 

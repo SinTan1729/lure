@@ -439,6 +439,7 @@ func executeFunctions(ctx context.Context, dec *decoder.Decoder, dirs types.Dire
 
 		err = version(
 			ctx,
+			nil,
 			interp.Dir(dirs.SrcDir),
 			interp.StdIO(os.Stdin, buf, os.Stderr),
 		)
@@ -460,7 +461,7 @@ func executeFunctions(ctx context.Context, dec *decoder.Decoder, dirs types.Dire
 	if ok {
 		log.Info("Executing prepare()").Send()
 
-		err = prepare(ctx, interp.Dir(dirs.SrcDir))
+		err = prepare(ctx, nil, interp.Dir(dirs.SrcDir))
 		if err != nil {
 			return err
 		}
@@ -470,7 +471,7 @@ func executeFunctions(ctx context.Context, dec *decoder.Decoder, dirs types.Dire
 	if ok {
 		log.Info("Executing build()").Send()
 
-		err = build(ctx, interp.Dir(dirs.SrcDir))
+		err = build(ctx, nil, interp.Dir(dirs.SrcDir))
 		if err != nil {
 			return err
 		}
@@ -480,7 +481,7 @@ func executeFunctions(ctx context.Context, dec *decoder.Decoder, dirs types.Dire
 	if ok {
 		log.Info("Executing package()").Send()
 
-		err = packageFn(ctx, interp.Dir(dirs.SrcDir))
+		err = packageFn(ctx, nil, interp.Dir(dirs.SrcDir))
 		if err != nil {
 			return err
 		}

@@ -33,7 +33,8 @@ import (
 func setCfgDirs(t *testing.T) {
 	t.Helper()
 
-	paths := config.GetPaths()
+	ctx := context.Background()
+	paths := config.GetPaths(ctx)
 
 	var err error
 	paths.CacheDir, err = os.MkdirTemp("/tmp", "lure-pull-test.*")
@@ -60,14 +61,16 @@ func setCfgDirs(t *testing.T) {
 func removeCacheDir(t *testing.T) {
 	t.Helper()
 
-	err := os.RemoveAll(config.GetPaths().CacheDir)
+	ctx := context.Background()
+	err := os.RemoveAll(config.GetPaths(ctx).CacheDir)
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 }
 
 func TestPull(t *testing.T) {
-	_, err := db.Open(":memory:")
+	ctx := context.Background()
+	_, err := db.Open(ctx, ":memory:")
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -75,8 +78,6 @@ func TestPull(t *testing.T) {
 
 	setCfgDirs(t)
 	defer removeCacheDir(t)
-
-	ctx := context.Background()
 
 	err = repos.Pull(ctx, []types.Repo{
 		{
@@ -88,7 +89,7 @@ func TestPull(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	result, err := db.GetPkgs("name LIKE 'itd%'")
+	result, err := db.GetPkgs(ctx, "name LIKE 'itd%'")
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}

@@ -39,6 +39,21 @@ type ExecFunc func(hc interp.HandlerContext, name string, args []string) error
 
 type ExecFuncs map[string]ExecFunc
 
+type execHandlerKey struct{}
+
+func WithExecHandler(ctx context.Context, h interp.ExecHandlerFunc) context.Context {
+	return context.WithValue(ctx, execHandlerKey{}, h)
+}
+
+func PerInvocationExec(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+	return func(ctx context.Context, args []string) error {
+		if h, ok := ctx.Value(execHandlerKey{}).(interp.ExecHandlerFunc); ok {
+			return h(ctx, args)
+		}
+		return next(ctx, args)
+	}
+}
+
 // ExecHandler returns a new ExecHandlerFunc that falls back to fallback
 // if the command cannot be found in the map. If fallback is nil, the default
 // handler is used.

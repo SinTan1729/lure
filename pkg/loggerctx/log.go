@@ -3,7 +3,7 @@ package loggerctx
 import (
 	"context"
 
-	"go.elara.ws/logger"
+	"github.com/sintan1729/lure/internal/logger"
 )
 
 // loggerCtxKey is used as the context key for loggers

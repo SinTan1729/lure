@@ -28,11 +28,11 @@ import (
 	"github.com/mattn/go-isatty"
 	"github.com/sintan1729/lure/internal/config"
 	"github.com/sintan1729/lure/internal/db"
+	"github.com/sintan1729/lure/internal/logger"
 	"github.com/sintan1729/lure/internal/translations"
 	"github.com/sintan1729/lure/pkg/loggerctx"
 	"github.com/sintan1729/lure/pkg/manager"
 	"github.com/urfave/cli/v3"
-	"go.elara.ws/logger"
 )
 
 var app = &cli.Command{
